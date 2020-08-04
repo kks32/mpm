@@ -12,14 +12,11 @@ jobs:
     container:
       image: cbgeo/mpm:latest
       options:  --user root
-    env:
-      GITHUB_WORKSPACE: /home/cbgeo/mpm/
     steps:
     - name: Checkout Meta Repo
       uses: actions/checkout@v2
     - name: Configure and build with G++
       run: |
-          pwd
           mkdir -p build
           [ "$(ls -A build)" ] && rm -rf build/*
           cd build
@@ -30,3 +27,4 @@ jobs:
           cmake -GNinja -DCMAKE_CXX_COMPILER=mpicxx -DCMAKE_EXPORT_COMPILE_COMMANDS=On -DKAHIP_ROOT=/home/cbgeo/KaHIP/ -DPARTIO_ROOT=/home/cbgeo/partio/ ..
           ninja -j2
           ctest -VV
+          mpirun --allow-run-as-root -n 4 ./mpmtest [mpi]
