@@ -19,6 +19,9 @@ jobs:
         path: $GITHUB_WORKSPACE/mpm
     - name: Configure and build with G++
       run: |
+          cd $GITHUB_WORKSPACE/mpm
+          pwd
+          ls
           mkdir -p build
           [ "$(ls -A build)" ] && rm -rf build/*
           cd build
