@@ -9,7 +9,9 @@ on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: cbgeo/mpm:latest
+    container:
+      image: quay.io/cbgeo/mpm:latest
+      options: --root
     steps:
     - name: Checkout Meta Repo
       uses: actions/checkout@v2
