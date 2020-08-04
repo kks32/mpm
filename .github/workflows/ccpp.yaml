@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: quay.io/cbgeo/mpm:latest
-      options: --root
+      image: cbgeo/mpm:latest
+      options:  --user root
     steps:
     - name: Checkout Meta Repo
       uses: actions/checkout@v2
