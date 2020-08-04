@@ -1,0 +1,17 @@
+name: C/C++ CI
+
+on: [pull_request, push]
+
+#schedule:
+# * is a special character in YAML so you have to quote this string
+#  - cron:  '*/5 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: cbgeo/mpm:latest
+    steps:
+    - name: Checkout Meta Repo
+      uses: actions/checkout@v2
+      with:
+        path: $GITHUB_WORKSPACE/mpm
