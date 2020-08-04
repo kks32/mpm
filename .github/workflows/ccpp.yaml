@@ -17,3 +17,16 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: $GITHUB_WORKSPACE/mpm
+    - name: Configure and build with G++
+      run: |
+          mkdir -p build
+          [ "$(ls -A build)" ] && rm -rf build/*
+          cd build
+          source /etc/profile.d/modules.sh
+          export MODULEPATH=$MODULEPATH:/usr/share/modulefiles
+          module load mpi/openmpi-x86_64
+          export CXX_COMPILER=mpicxx
+          cmake -GNinja -DCMAKE_CXX_COMPILER=mpicxx -DCMAKE_EXPORT_COMPILE_COMMANDS=On -DKAHIP_ROOT=/home/cbgeo/KaHIP/ -DPARTIO_ROOT=/home/cbgeo/partio/ ..
+          ninja -j2
+          ctest -VV
+          mpirun -n 4 ./mpmtest [mpi]
